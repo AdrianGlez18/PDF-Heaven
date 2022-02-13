@@ -19,3 +19,4 @@ const BlockSection = ({ children, delay = 0 }) => (
 )
 
 export default BlockSection
+

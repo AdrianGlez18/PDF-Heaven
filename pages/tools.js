@@ -5,6 +5,7 @@ import { getDarkHome, getLightHome } from "../lib/imageMode";
 import ThemeButton from '../components/themeButton';
 import Thumbnail from "../components/thumbnail";
 import imagepdf from '../public/imagepdf.png';
+import pdfjoin from '../public/pdfjoin.png';
 import BlockSection from "../components/BlockSection";
 
 const ToolsPage = () => {
@@ -23,11 +24,8 @@ const ToolsPage = () => {
                             <Thumbnail href="/image-to-pdf" imageSource={imagepdf} title="Image to PDF">
                                 Convert one or more images to pdf
                             </Thumbnail>
-                            <Thumbnail href="/image-to-pdf" imageSource={imagepdf} title="Image to PDF">
-                                Convert one or more images to pdf
-                            </Thumbnail>
-                            <Thumbnail href="/image-to-pdf" imageSource={imagepdf} title="Image to PDF">
-                                Convert one or more images to pdf
+                            <Thumbnail href="/join-pdf" imageSource={pdfjoin} title="Join PDF">
+                                Join TWO or more pdfs into one
                             </Thumbnail>
                         </SimpleGrid>
                     </VStack>

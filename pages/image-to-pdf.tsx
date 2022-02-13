@@ -1,7 +1,9 @@
 import React, { ChangeEventHandler } from "react";
 import BlockSection from "../components/BlockSection";
 import jsPDF from "jspdf";
+import {PaddedDiv} from "../components/emotionComponents";
 
+// Class made to be able to edit image properties
 class ExtendedImage {
     public img;
     constructor(public imageFileType: string) {
@@ -147,6 +149,7 @@ function ImagePDF() {
   }, [uploadedImages, cleanUpUploadedImages]);
 
   return (
+    <PaddedDiv>
     <BlockSection delay={0.2}>
 
       {/* Overview of uploaded images */}
@@ -186,6 +189,7 @@ function ImagePDF() {
         </button>
       </div>
     </BlockSection>
+    </PaddedDiv>
   );
 }
 
