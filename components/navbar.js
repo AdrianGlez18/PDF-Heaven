@@ -16,7 +16,7 @@ const NavBar = () => {
                     
                     {
                         // Choose the image based on current theme :)
-                        colorMode === 'light' ? getLightHome() : getLightHome()
+                        colorMode === 'light' ? getLightHome() : getDarkHome()
                     }
                     
                     <VStack>
@@ -26,7 +26,7 @@ const NavBar = () => {
                                 <Text color={colorMode === "dark" ? 'deepBlue' : 'lightBg'}>Tools</Text>
                             </Box>
                             </Link>
-                            <Link href={'/'}>
+                            <Link href={'/about'}>
                             <Box borderRadius="lg" bg={colorMode === "dark" ? 'lightGreen' : 'deepGreen'} p={3} >
                                 <Text color={colorMode === "dark" ? 'deepBlue' : 'lightBg'}>About</Text>
                             </Box>

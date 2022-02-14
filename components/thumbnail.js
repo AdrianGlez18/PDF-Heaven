@@ -4,7 +4,8 @@ import { Box, Text, LinkBox, LinkOverlay } from '@chakra-ui/react'
 
 const Thumbnail = ({ children, href, title, imageSource }) => (
     <Box w="100%" textAlign="center">
-      <LinkBox cursor="pointer">
+      <NextLink href={href}>
+        <LinkBox cursor="pointer">
         <Image
           src={imageSource}
           alt={title}
@@ -14,11 +15,12 @@ const Thumbnail = ({ children, href, title, imageSource }) => (
           width="200px"
           height={200}
         />
-        <LinkOverlay href={href}>
+
           <Text mt={2}>{title}</Text>
-        </LinkOverlay>
+
         <Text fontSize={14}>{children}</Text>
-      </LinkBox>
+        </LinkBox>
+      </NextLink>
     </Box>
   )
 

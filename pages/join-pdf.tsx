@@ -1,7 +1,8 @@
 import { useState, useEffect, useCallback, ChangeEventHandler } from "react";
 import BlockSection from "../components/BlockSection";
 import { PDFDocument } from 'pdf-lib'
-import {PaddedDiv} from "../components/emotionComponents";
+import { VStack, HStack, Heading, useColorMode } from "@chakra-ui/react";
+import { PaddedDiv, FilesDiv } from "../components/emotionComponents";
 
 class ExtendedDocument {
     public docFileType: string;
@@ -36,7 +37,7 @@ const generatePdfFromDocuments = async (docList: ExtendedDocument[]) => {
         const docresponse = docname.docFile;
         const buf = await docresponse.arrayBuffer();
         const docBytes = new Uint8Array(buf);
-        const doc = await PDFDocument.load(docBytes, {ignoreEncryption: true});
+        const doc = await PDFDocument.load(docBytes, { ignoreEncryption: true });
 
         for (let i = 0; i < doc.getPageCount(); i++) {
             const page = generatedDoc.addPage(
@@ -95,48 +96,51 @@ function JoinPdfs() {
         cleanUpUploadedDocuments();
     }, [uploadedDocuments, cleanUpUploadedDocuments]);
 
+    const { colorMode } = useColorMode()
     return (
         <PaddedDiv>
-        <BlockSection delay={0.2}>
+            <BlockSection delay={0.2}>
+                <VStack>
+                    <Heading as="h2" color={colorMode === "light" ? 'deepBlue' : 'lightBg'} variant={"section-title"} mb={5}> Join PDF files </Heading>
+                    <FilesDiv>
+                        {uploadedDocuments.length > 0 ? (
+                            uploadedDocuments.map((doc) => (
+                                <img key={doc.url} src={doc.url} className="uploaded-image-i2p" />
+                            ))
+                        ) : (
+                            <p>Your pdfs will be here!</p>
+                        )}
+                    </FilesDiv>
 
-            {/* Overview of uploaded images */}
-            <div className="images-container-i2p">
-                {uploadedDocuments.length > 0 ? (
-                    uploadedDocuments.map((doc) => (
-                        <img key={doc.url} src={doc.url} className="uploaded-image-i2p" />
-                    ))
-                ) : (
-                    <p>Upload some images...</p>
-                )}
-            </div>
+                    {/* Buttons for uploading images and generating a PDF */}
+                    <div className="buttons-container-i2p">
+                        {/* Uploads images */}
+                        <label htmlFor="file-input">
+                            <span className="button-i2p">Upload pdf files</span>
+                            <input
+                                id="file-input"
+                                type="file"
+                                accept="application/pdf"
+                                onChange={handleDocumentUpload}
+                                // Native file input is hidden only for styling purposes
+                                style={{ display: "none" }}
+                                multiple
+                            />
+                        </label>
 
-            {/* Buttons for uploading images and generating a PDF */}
-            <div className="buttons-container-i2p">
-                {/* Uploads images */}
-                <label htmlFor="file-input">
-                    <span className="button-i2p">Upload pdf files</span>
-                    <input
-                        id="file-input"
-                        type="file"
-                        accept="application/pdf"
-                        onChange={handleDocumentUpload}
-                        // Native file input is hidden only for styling purposes
-                        style={{ display: "none" }}
-                        multiple
-                    />
-                </label>
-
-                {/* Generates PDF */}
-                <button
-                    onClick={handleGeneratePdfFromDocuments}
-                    className="button-i2p"
-                    disabled={uploadedDocuments.length === 0}
-                >
-                    Generate PDF
-                </button>
-            </div>
-        </BlockSection>
+                        {/* Generates PDF */}
+                        <button
+                            onClick={handleGeneratePdfFromDocuments}
+                            className="button-i2p"
+                            disabled={uploadedDocuments.length === 0}
+                        >
+                            Generate PDF
+                        </button>
+                    </div>
+                </VStack>
+            </BlockSection>
         </PaddedDiv>
+
     );
 }
 

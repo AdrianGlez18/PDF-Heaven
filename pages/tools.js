@@ -6,6 +6,7 @@ import ThemeButton from '../components/themeButton';
 import Thumbnail from "../components/thumbnail";
 import imagepdf from '../public/imagepdf.png';
 import pdfjoin from '../public/pdfjoin.png';
+import remove from '../public/remove.png';
 import BlockSection from "../components/BlockSection";
 
 const ToolsPage = () => {
@@ -26,6 +27,9 @@ const ToolsPage = () => {
                             </Thumbnail>
                             <Thumbnail href="/join-pdf" imageSource={pdfjoin} title="Join PDF">
                                 Join TWO or more pdfs into one
+                            </Thumbnail>
+                            <Thumbnail href="/remove-pages" imageSource={remove} title="Remove PDF pages">
+                                Remove one or more pages from a pdf file
                             </Thumbnail>
                         </SimpleGrid>
                     </VStack>

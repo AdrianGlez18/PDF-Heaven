@@ -1,20 +1,21 @@
 import React, { ChangeEventHandler } from "react";
 import BlockSection from "../components/BlockSection";
+import { VStack, HStack, Heading, useColorMode } from "@chakra-ui/react";
 import jsPDF from "jspdf";
-import {PaddedDiv} from "../components/emotionComponents";
+import { PaddedDiv, FilesDiv } from "../components/emotionComponents";
 
 // Class made to be able to edit image properties
 class ExtendedImage {
-    public img;
-    constructor(public imageFileType: string) {
-      this.img = document.createElement("img");
-      this.imageFileType= imageFileType;
-    }
-  
-    getImageType(): string {
-      return this.imageFileType.split("/")[1];
-    }
+  public img;
+  constructor(public imageFileType: string) {
+    this.img = document.createElement("img");
+    this.imageFileType = imageFileType;
   }
+
+  getImageType(): string {
+    return this.imageFileType.split("/")[1];
+  }
+}
 
 // Each image is loaded and an object URL is created.
 const fileToImageURL = (file: File): Promise<ExtendedImage> => {
@@ -148,47 +149,56 @@ function ImagePDF() {
     cleanUpUploadedImages();
   }, [uploadedImages, cleanUpUploadedImages]);
 
+  const { colorMode } = useColorMode()
+
   return (
     <PaddedDiv>
-    <BlockSection delay={0.2}>
+      <BlockSection delay={0.2}>
 
-      {/* Overview of uploaded images */}
-      <div className="images-container-i2p">
-        {uploadedImages.length > 0 ? (
-          uploadedImages.map((image) => (
-            <img key={image.img.src} src={image.img.src} className="uploaded-image-i2p" />
-          ))
-        ) : (
-          <p>Upload some images...</p>
-        )}
-      </div>
+        <VStack>
 
-      {/* Buttons for uploading images and generating a PDF */}
-      <div className="buttons-container-i2p">
-        {/* Uploads images */}
-        <label htmlFor="file-input">
-          <span className="button-i2p">Upload images</span>
-          <input
-            id="file-input"
-            type="file"
-            accept="image/*"
-            onChange={handleImageUpload}
-            // Native file input is hidden only for styling purposes
-            style={{ display: "none" }}
-            multiple
-          />
-        </label>
+          <Heading as="h2" color={colorMode === "light" ? 'deepBlue' : 'lightBg'} variant={"section-title"} mb={5}> Convert images to PDF </Heading>
 
-        {/* Generates PDF */}
-        <button
-          onClick={handleGeneratePdfFromImages}
-          className="button-i2p"
-          disabled={uploadedImages.length === 0}
-        >
-          Generate PDF
-        </button>
-      </div>
-    </BlockSection>
+          {/* Overview of uploaded images */}
+          <FilesDiv>
+            {uploadedImages.length > 0 ? (
+              uploadedImages.map((image) => (
+                <img key={image.img.src} src={image.img.src} className="uploaded-image-i2p" />
+              ))
+            ) : (
+              <p>Your images will be here!</p>
+            )}
+          </FilesDiv>
+
+          <br />
+
+          {/* Buttons for uploading images and generating a PDF */}
+          <div className="buttons-container-i2p">
+            {/* Uploads images */}
+            <label htmlFor="file-input">
+              <span className="button-i2p">Upload images</span>
+              <input
+                id="file-input"
+                type="file"
+                accept="image/*"
+                onChange={handleImageUpload}
+                // Native file input is hidden only for styling purposes
+                style={{ display: "none" }}
+                multiple
+              />
+            </label>
+
+            {/* Generates PDF */}
+            <button
+              onClick={handleGeneratePdfFromImages}
+              className="button-i2p"
+              disabled={uploadedImages.length === 0}
+            >
+              Generate PDF
+            </button>
+          </div>
+        </VStack>
+      </BlockSection>
     </PaddedDiv>
   );
 }
